@@ -1,0 +1,14 @@
+{
+  "name": "node.uptime",
+  "description": "Simple node.js module that can be used for continius 'is http server up?' check.",
+  "version": "0.1.0",
+  "author": "Fedor Indutny <fedor.indutny@gmail.com>",
+  "contributors": [ 
+    { "name": "Fedor Indutny", "email": "fedor.indutny@gmail.com" }
+  ],
+  "dependencies": [ "optimist" ],
+  "keywords": ["node.uptime", "uptime"],
+  "directories": { "lib": "./lib/node.uptime" },
+  "bin": { "node.uptime": "./bin/node.uptime" },
+  "engines": { "node": ">= 0.2.4" }
+}

@@ -1,0 +1,29 @@
+#!/usr/bin/env node
+
+var util = require('util'),
+    exec  = require('child_process').exec,
+    uptime = require('../lib/node.uptime'),
+    argv = require('optimist')
+              .usage('Usage: -p 80 -h localhost -i [interval] -u [on up] ' +
+                     '-d [on down]\r\n' +
+                     'Example: node.uptime -h github.com -u "echo up" ' +
+                     '-d "echo down"')
+              .demand(['u', 'd'])
+              .argv,
+    lastState = -1;
+
+uptime(argv.p || 80, argv.h || 'localhost', {
+  interval: (argv.i || 10000) - 0
+}).on('ping', function(timings) {
+  var state = timings.error ? 1 : 0;
+  
+  if (state !== lastState) {
+    lastState = state;
+    var action = argv[state ? 'd' : 'u'];
+    
+    if (!action) return;
+    exec(action, function(error, stdout, stderr) {
+      util.print('uptime action: ' + stdout || stderr);
+    });
+  }
+});
